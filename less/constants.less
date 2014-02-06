@@ -1,0 +1,18 @@
+/* CONSTANTS */
+
+@lightRed:   #fdd;
+@lightGreen: #33FF7E;
+@blue: #337AFF;
+
+@defaultShapesWidth: 200px;
+@defaultRadius: 30px;
+ 
+/* OPERATIONS & COLOR FUNCTIONS */
+@darkBlue: @blue - #555;
+@lightBlue:  @blue + #111;
+
+@defaultHoverColor: @lightBlue;
+@defaultThemeColor: @darkBlue;
+ 
+@borderSize:  @defaultShapesWidth * 0.02;
+@borderColor: darken(desaturate(@defaultThemeColor, 70%), 20%); 
