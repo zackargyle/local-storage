@@ -28,7 +28,7 @@ var AddOns = function() {
   };
 };
 
-describe('vgPersist', function() {
+describe('ngPersist', function() {
   'use strict';
   var addOns = new AddOns();
  
