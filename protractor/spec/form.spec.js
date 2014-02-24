@@ -1,51 +1,68 @@
+/*
+  TO RUN TESTS
+  tab 1: webdriver-manager start
+  tab 2: ./scripts/web-server.js
+  tab 3: protractor path-to/protractor.conf.js
+*/
+
 var AddOns = function() {
-  this.street = element(by.model('street'));
-  this.city = element(by.model('city'));
-  this.state = element(by.model('state'));
-  this.zip = element(by.model('zip'));
-  this.submit = element(by.id("submitter"));
+  var street = element(by.model('street'));
+  var city = element(by.model('city'));
+  var state = element(by.model('state'));
+  var zip = element(by.model('zip'));
 
-  this.get = function() {
-    browser.get('http://localhost:8000/index.html');
+  this.getStreet = function() {
+    return street.getAttribute('value');
   };
 
-  this.setStreet = function(street) {
-    this.street.sendKeys(street);
+  this.getCity = function() {
+    return city.getAttribute('value');
   };
 
-  this.setCity = function(city) {
-    this.city.sendKeys(city);
+  this.getState = function() {
+    return state.getAttribute('value');
   };
 
-  this.setState = function(state) {
-    this.state.sendKeys(state);
-  };
-
-  this.setZip = function(zip) {
-    this.zip.sendKeys(zip);
+  this.getZip = function() {
+    return zip.getAttribute('value');
   };
 };
 
-describe('Form', function() {
-  it('should fill out the form', function() {
-    var addOns = new AddOns();
-    addOns.get();
-
-    addOns.setStreet('100 N University Ave.');
-    addOns.setCity('Provo');
-    addOns.setState('UT');
-    addOns.setZip('84604');
-
-    expect(addOns.street.getAttribute('value')).toEqual('100 N University Ave.');
-    expect(addOns.city.getAttribute('value')).toEqual('Provo');
-    expect(addOns.state.getAttribute('value')).toEqual('UT');
-    expect(addOns.zip.getAttribute('value')).toEqual('84604');
-
-    // test local storage: correct data
-
-    addOns.submit.click();
-
-    // test local storage: isEmpty
-
+describe('vgPersist', function() {
+  'use strict';
+  var addOns = new AddOns();
+ 
+  beforeEach(function () {
+    // Load new window, and wait for angular rendering.
+    browser.get('/index.html');
+    browser.waitForAngular();
   });
+ 
+  it('should fill out form', function () {
+    element(by.model('street')).sendKeys('100 N University Ave.');
+    element(by.model('city')).sendKeys('Provo');
+    element(by.model('state')).sendKeys('UT');
+    element(by.model('zip')).sendKeys('84604');
+
+    // Clear focus so zip input fires onchange event
+    element(by.tagName('body')).click();
+  });
+
+  it('should prepopulate input fields', function() {
+    expect(addOns.getStreet()).toBe('100 N University Ave.');
+    expect(addOns.getCity()).toBe('Provo');
+    expect(addOns.getState()).toBe('UT');
+    expect(addOns.getZip()).toBe('84604');
+
+    // Trigger clearing of localstorage
+    element(by.id('form-submit')).submit();
+  });
+
+  it('should have cleared local storage, and thus have empty inputs', function() {
+    expect(addOns.getStreet()).toBe('');
+    expect(addOns.getCity()).toBe('');
+    expect(addOns.getState()).toBe('');
+    expect(addOns.getZip()).toBe('');
+  });
+
 });

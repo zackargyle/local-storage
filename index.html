@@ -1,14 +1,9 @@
 <!DOCTYPE html>
-<html ng-app='vgAddons' >
+<html ng-app='vgAddons'>
 
-  <head>
-    <script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
-    <script src="http://code.angularjs.org/1.2.9/angular-cookies.min.js"></script>
-    <script src="vgAddons.js"></script> 
-    <link rel="stylesheet" href="less/style.css">
-  </head> 
+  <head></head> 
 
-  <body>
+  <body ng-controller="ctrl" id="body">
     
     <div>
         <form vg-persist name="form1" >
@@ -23,12 +18,15 @@
             <br>
             <input type='text' ng-model='zip' placeholder=" Zip" required/>
             <br>
-            <input type='submit' id="submitter"/>
+            <input type='submit' id="form-submit"/>
         </form>
     </div>
-    <div class="shape" id="shape1"></div>
-    <div class="shape" id="shape2"></div>
-    <div class="shape" id="shape3"></div>
+    <!-- <div class="shape" id="shape1" vg-draggable='dragOptions'></div> -->
+    <!-- <div class="shape" id="shape2"></div> -->
+    <!-- <div class="shape" id="shape3"></div> -->
+
+    <script src="angular.js"></script>
+    <script src="vgAddons.js"></script> 
   </body>
 
 </html>
